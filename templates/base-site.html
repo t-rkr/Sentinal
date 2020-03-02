@@ -1,18 +1,4 @@
-<!--
-=========================================================
-* * Black Dashboard - v1.0.1
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/black-dashboard
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +17,8 @@
   <link href="/static/assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="/static/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/chatbot.css">
 
   <!-- Specific Page CSS goes HERE  -->
   {% block stylesheets %}{% endblock stylesheets %}
@@ -47,7 +35,7 @@
       {% include 'site_template/navigation.html' %}
 
       <div class="content">
-
+        {% include 'site_template/chatbot.html' %}
         {% block content %}{% endblock content %}
 
       </div>
