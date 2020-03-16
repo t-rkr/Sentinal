@@ -1,4 +1,5 @@
 from flask import Flask,jsonify, render_template, redirect, request, url_for
+import requests
 
 
 app = Flask(__name__)
@@ -10,7 +11,18 @@ def chatbot():
 
 @app.route('/timeline')
 def timeline():
-    return render_template('tabs/timeline.html')
+    url = "http://127.0.0.1:5000/metrics"
+
+    querystring_d = {"scope": "day"}
+    querystring_m = {"scope": "month"}
+
+    metrics_day = requests.request("GET", url, params=querystring_d).json()
+    metrics_month = requests.request("GET", url, params=querystring_m).json()
+
+    return render_template('tabs/timeline.html',metrics_day_k=[str(x) for x in list(metrics_day.keys())],
+                                                                   metrics_day_v=list(metrics_day.values()),
+                           metrics_month_k=[str(x) for x in list(metrics_month.keys())],metrics_month_v=list(
+            metrics_month.values()))
 
 @app.route('/tweets')
 def tweets():
@@ -18,9 +30,14 @@ def tweets():
 
 @app.route('/')
 def hello_world():
-    import requests
+
+    #Most recent tweets
     t_data = requests.get("http://127.0.0.1:5000/tweets").json()
-    return render_template('index.html',t_data=t_data)
+
+    #Sentiment data
+    s_data = requests.get("http://127.0.0.1:5000/polarity").json()
+
+    return render_template('index.html',t_data=t_data, s_data=s_data)
 #
 # @app.route('/send_message', methods=['POST'])
 # def chatbot_message():

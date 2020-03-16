@@ -148,7 +148,7 @@
             <div class="card card-chart">
                 <div class="card-header">
                     <h5 class="card-category">Sentiments</h5>
-                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 120</h3>
+                    <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 10979</h3>
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
@@ -268,12 +268,13 @@
         gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
         gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
         gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
-
+        var data_x =  [{{ s_data['negative'] }}, {{ s_data['positive'] }}]
+        console.log(data_x);
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [10, 20],
+                    data: data_x,
                     backgroundColor: ["#3e95cd", "#8e5ea2"]
                 }],
                 // These labels appear in the legend and in the tooltips when hovering different arcs
