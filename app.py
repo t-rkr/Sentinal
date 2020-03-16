@@ -18,7 +18,9 @@ def tweets():
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    import requests
+    t_data = requests.get("http://127.0.0.1:5000/tweets").json()
+    return render_template('index.html',t_data=t_data)
 #
 # @app.route('/send_message', methods=['POST'])
 # def chatbot_message():

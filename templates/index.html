@@ -176,7 +176,7 @@
                                     Username
                                 </th>
                                 <th>
-                                    City
+                                    Time
                                 </th>
                                 <th class="text-center">
                                     Sentiment Score
@@ -184,104 +184,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>
-                                    Dakota Rice
-                                </td>
-                                <td>
-                                    Niger
-                                </td>
-                                <td>
-                                    Oud-Turnhout
-                                </td>
-                                <td class="text-center">
-                                    1.23
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Minerva Hooper
-                                </td>
-                                <td>
-                                    Curaçao
-                                </td>
-                                <td>
-                                    Sinaai-Waas
-                                </td>
-                                <td class="text-center">
-                                    0.2
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Sage Rodriguez
-                                </td>
-                                <td>
-                                    Netherlands
-                                </td>
-                                <td>
-                                    Baileux
-                                </td>
-                                <td class="text-center">
-                                    -0.4
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Philip Chaney
-                                </td>
-                                <td>
-                                    Korea, South
-                                </td>
-                                <td>
-                                    Overland Park
-                                </td>
-                                <td class="text-center">
-                                    -1.4
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Doris Greene
-                                </td>
-                                <td>
-                                    Malawi
-                                </td>
-                                <td>
-                                    Feldkirchen in Kärnten
-                                </td>
-                                <td class="text-center">
-                                    0.001
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Mason Porter
-                                </td>
-                                <td>
-                                    Chile
-                                </td>
-                                <td>
-                                    Gloucester
-                                </td>
-                                <td class="text-center">
-                                    1.2
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Jon Porter
-                                </td>
-                                <td>
-                                    Portugal
-                                </td>
-                                <td>
-                                    Gloucester
-                                </td>
-                                <td class="text-center">
-                                    0.45
-                                </td>
-                            </tr>
+                            {% for item in t_data %}
+                                <tr>
+                                    <td>
+                                        {{ t_data[item]['tweet'] }}
+                                    </td>
+                                    <td>
+                                        {{ t_data[item]['username'] }}
+                                    </td>
+                                    <td>
+                                        {{ t_data[item]['time'] }}
+                                    </td>
+                                    <td>
+                                        {{ t_data[item]['sentiment'] }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -345,7 +263,34 @@
 
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        var ctx = document.getElementById("chartLineGreen").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
 
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [10, 20],
+                    backgroundColor: ["#3e95cd", "#8e5ea2"]
+                }],
+                // These labels appear in the legend and in the tooltips when hovering different arcs
+                labels: [
+                    'Negative',
+                    'Positive'
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                //cutoutPercentage: 40,
+                responsive: true,
+
+            }
+        });
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //Greviences chart
@@ -362,8 +307,8 @@
                 display: false
             },
             data: {
-                labels: ["Connectivity","Internet","Account","Products",
-            "CustomerSupport"],
+                labels: ["Connectivity", "Internet", "Account", "Products",
+                    "CustomerSupport"],
                 datasets: [{
                     label: "Greviences",
                     fill: true,
