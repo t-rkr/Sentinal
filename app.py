@@ -9,6 +9,18 @@ app = Flask(__name__)
 def chatbot():
     return render_template('tabs/chatbot.html')
 
+@app.route('/metrics')
+def get_metrics():
+    url = "http://127.0.0.1:5000/metrics"
+
+    querystring_d = {"scope": "day"}
+    querystring_m = {"scope": "month"}
+
+    metrics_day = requests.request("GET", url, params=querystring_d).json()
+    metrics_month = requests.request("GET", url, params=querystring_m).json()
+
+    return 0
+
 @app.route('/timeline')
 def timeline():
     url = "http://127.0.0.1:5000/metrics"
@@ -19,17 +31,29 @@ def timeline():
     metrics_day = requests.request("GET", url, params=querystring_d).json()
     metrics_month = requests.request("GET", url, params=querystring_m).json()
 
-    return render_template('tabs/timeline.html',metrics_day_k=[str(x) for x in list(metrics_day.keys())],
-                                                                   metrics_day_v=list(metrics_day.values()),
-                           metrics_month_k=[str(x) for x in list(metrics_month.keys())],metrics_month_v=list(
-            metrics_month.values()))
+    metrics_day_k = list(metrics_day.keys())
+    metrics_day_v = list(metrics_day.values())
+    metrics_month_k = [str(x) for x in list(metrics_month.keys())]
+    metrics_month_v = list(metrics_month.values())
+    return render_template('tabs/timeline.html',metrics_day_k=metrics_day_k,
+                                                                   metrics_day_v=metrics_day_v,
+                           metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v)
 
 @app.route('/tweets')
 def tweets():
     return render_template('tabs/tweets.html')
 
 @app.route('/')
-def hello_world():
+def index():
+
+    #timeline graph
+    metrics_d = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "day"}).json()
+    metrics_m = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "month"}).json()
+    metrics_day_k = list(metrics_d.keys())
+    metrics_day_v = list(metrics_d.values())
+    metrics_month_k = list(metrics_m.keys())
+    metrics_month_v = list(metrics_m.values())
+
 
     #Most recent tweets
     t_data = requests.get("http://127.0.0.1:5000/tweets").json()
@@ -37,7 +61,11 @@ def hello_world():
     #Sentiment data
     s_data = requests.get("http://127.0.0.1:5000/polarity").json()
 
-    return render_template('index.html',t_data=t_data, s_data=s_data)
+
+
+    return render_template('index.html',t_data=t_data, s_data=s_data,metrics_day_k=metrics_day_k,
+                                                                   metrics_day_v=metrics_day_v,
+                           metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v)
 #
 # @app.route('/send_message', methods=['POST'])
 # def chatbot_message():
