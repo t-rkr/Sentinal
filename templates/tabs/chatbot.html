@@ -74,7 +74,7 @@
 {% block javascripts %}
 <script>
 function submit_message(message) {
-        $.post( "http://localhost:5000/predict", {message: message}, handle_response);
+        $.post( "/chat", {message: message}, handle_response);
 
         function handle_response(data) {
           // append the bot repsonse to the div

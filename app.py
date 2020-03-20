@@ -9,6 +9,13 @@ app = Flask(__name__)
 def chatbot():
     return render_template('tabs/chatbot.html')
 
+@app.route('/chat',methods=["POST"])
+def chat():
+    url = "http://127.0.0.1:5000/chat"
+    querystring = {"message": "Hey"}
+    reply = requests.request("POST",url,params=querystring).json()
+    return reply
+
 @app.route('/metrics')
 def get_metrics():
     url = "http://127.0.0.1:5000/metrics"
