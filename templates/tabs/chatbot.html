@@ -22,7 +22,7 @@
 }
 
 .bot-message {
-  background: #22b538;
+  background: rgba(89, 82, 80, 0.89);
   max-width: 300px;
   color: white;
   margin-left: auto;
@@ -36,7 +36,8 @@
 }
 #chat_input {
     width: 500px;
-    /*margin: 35px 0px;*/
+    /*margin: 35px 0px; */
+    background-color: rgba(155,160,171,0.42);
     border-radius: 3px;
     margin-left: 15%;
     margin-right: 15%;
@@ -74,6 +75,7 @@
 {% block javascripts %}
 <script>
 function submit_message(message) {
+        console.log(message);
         $.post( "/chat", {message: message}, handle_response);
 
         function handle_response(data) {
@@ -89,8 +91,9 @@ function submit_message(message) {
     }
 $('#chat_target').on('submit', function (e) {
     e.preventDefault();
-    console.log("Should have worked!");
-    const input_message = $('#chat_input').val()
+
+    const input_message = $('#chat_input').val();
+
     // return if the user does not enter any text
     if (!input_message) {
         return
@@ -110,9 +113,8 @@ $('#chat_target').on('submit', function (e) {
         `)
 
     // clear the text input
-    $('#chat_input').val('')
+    $('#chat_input').val('');
 
-    console.log("Should have worked!");
     // send the message
     submit_message(input_message)
 });

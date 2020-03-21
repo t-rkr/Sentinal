@@ -11,8 +11,10 @@ def chatbot():
 
 @app.route('/chat',methods=["POST"])
 def chat():
+    message = request.form['message']
+    print(message)
     url = "http://127.0.0.1:5000/chat"
-    querystring = {"message": "Hey"}
+    querystring = {"message": message}
     reply = requests.request("POST",url,params=querystring).json()
     return reply
 

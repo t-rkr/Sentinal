@@ -97,13 +97,13 @@
                       <i class="tim-icons icon-gift-2"></i>
                     </span>
                                 </label>
-                                <label class="btn btn-sm btn-primary btn-simple" id="2">
-                                    <input type="radio" class="d-none" name="options">
-                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Year</span>
-                                    <span class="d-block d-sm-none">
-                      <i class="tim-icons icon-tap-02"></i>
-                    </span>
-                                </label>
+{#                                <label class="btn btn-sm btn-primary btn-simple" id="2">#}
+{#                                    <input type="radio" class="d-none" name="options">#}
+{#                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Year</span>#}
+{#                                    <span class="d-block d-sm-none">#}
+{#                      <i class="tim-icons icon-tap-02"></i>#}
+{#                    </span>#}
+{#                                </label>#}
                             </div>
                         </div>
                     </div>
@@ -356,13 +356,13 @@
             data.labels = {{ metrics_month_k|safe }}
             myChartData.update();
         });
-        $("#2").click(function () {
-            var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];
-            var data = myChartData.config.data;
-            data.datasets[0].data = chart_data;
-            data.labels = chart_labels;
-            myChartData.update();
-        });
+        {#$("#2").click(function () {#}
+        {#    var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];#}
+        {#    var data = myChartData.config.data;#}
+        {#    data.datasets[0].data = chart_data;#}
+        {#    data.labels = chart_labels;#}
+        {#    myChartData.update();#}
+        {# });#}
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //Sentiment Distribution Chart
