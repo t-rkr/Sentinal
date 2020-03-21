@@ -33,10 +33,8 @@ def get_metrics():
 @app.route('/timeline')
 def timeline():
     url = "http://127.0.0.1:5000/metrics"
-
     querystring_d = {"scope": "day"}
     querystring_m = {"scope": "month"}
-
     metrics_day = requests.request("GET", url, params=querystring_d).json()
     metrics_month = requests.request("GET", url, params=querystring_m).json()
 
@@ -44,6 +42,9 @@ def timeline():
     metrics_day_v = list(metrics_day.values())
     metrics_month_k = [str(x) for x in list(metrics_month.keys())]
     metrics_month_v = list(metrics_month.values())
+
+
+
     return render_template('tabs/timeline.html',metrics_day_k=metrics_day_k,
                                                                    metrics_day_v=metrics_day_v,
                            metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v)
@@ -70,11 +71,15 @@ def index():
     #Sentiment data
     s_data = requests.get("http://127.0.0.1:5000/polarity").json()
 
+    user_metrics = requests.get("http://127.0.0.1:5000/userMetrics").json()
+
+    total_tweets = requests.get("http://127.0.0.1:5000/totalTweets").json()
 
 
     return render_template('index.html',t_data=t_data, s_data=s_data,metrics_day_k=metrics_day_k,
                                                                    metrics_day_v=metrics_day_v,
-                           metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v)
+                           metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v,
+                           user_metrics=user_metrics,total_tweets=total_tweets)
 #
 # @app.route('/send_message', methods=['POST'])
 # def chatbot_message():
