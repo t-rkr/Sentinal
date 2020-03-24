@@ -55,31 +55,38 @@ def tweets():
 
 @app.route('/')
 def index():
-
-    #timeline graph
-    metrics_d = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "day"}).json()
-    metrics_m = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "month"}).json()
-    metrics_day_k = list(metrics_d.keys())
-    metrics_day_v = list(metrics_d.values())
-    metrics_month_k = list(metrics_m.keys())
-    metrics_month_v = list(metrics_m.values())
-
-
-    #Most recent tweets
-    t_data = requests.get("http://127.0.0.1:5000/tweets").json()
-
-    #Sentiment data
-    s_data = requests.get("http://127.0.0.1:5000/polarity").json()
-
-    user_metrics = requests.get("http://127.0.0.1:5000/userMetrics").json()
-
-    total_tweets = requests.get("http://127.0.0.1:5000/totalTweets").json()
+    try:
+        #timeline graph
+        metrics_d = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "day"}).json()
+        metrics_m = requests.get("http://127.0.0.1:5000/metrics",params={"scope": "month"}).json()
+        metrics_day_k = list(metrics_d.keys())
+        metrics_day_v = list(metrics_d.values())
+        metrics_month_k = list(metrics_m.keys())
+        metrics_month_v = list(metrics_m.values())
 
 
-    return render_template('index.html',t_data=t_data, s_data=s_data,metrics_day_k=metrics_day_k,
-                                                                   metrics_day_v=metrics_day_v,
-                           metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v,
-                           user_metrics=user_metrics,total_tweets=total_tweets)
+        #Most recent tweets
+        t_data = requests.get("http://127.0.0.1:5000/tweets").json()
+
+        #Sentiment data
+        s_data = requests.get("http://127.0.0.1:5000/polarity").json()
+
+        #Unique users
+        user_metrics = requests.get("http://127.0.0.1:5000/userMetrics",params={"scope":"day"}).json()
+        user__monthly_metrics = requests.get("http://127.0.0.1:5000/userMetrics",params={"scope":"month"}).json()
+
+
+        total_tweets = requests.get("http://127.0.0.1:5000/totalTweets").json()
+
+
+        return render_template('index.html',t_data=t_data, s_data=s_data,metrics_day_k=metrics_day_k,
+                                                                       metrics_day_v=metrics_day_v,
+                               metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v,
+                               user_metrics=user_metrics,total_tweets=total_tweets,user__monthly_metrics=user__monthly_metrics)
+    except Exception as m:
+        print(m)
+        return render_template('errors/500.html')
+
 #
 # @app.route('/send_message', methods=['POST'])
 # def chatbot_message():
