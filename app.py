@@ -51,7 +51,8 @@ def timeline():
 
 @app.route('/tweets')
 def tweets():
-    return render_template('tabs/tweets.html')
+    t_data = requests.get("http://127.0.0.1:5000/tweetsData").json()
+    return render_template('tabs/tweets.html',t_data=t_data)
 
 @app.route('/')
 def index():
@@ -75,6 +76,9 @@ def index():
         user_metrics = requests.get("http://127.0.0.1:5000/userMetrics",params={"scope":"day"}).json()
         user__monthly_metrics = requests.get("http://127.0.0.1:5000/userMetrics",params={"scope":"month"}).json()
 
+        #greviences
+        g_data = requests.get("http://127.0.0.1:5000/grev").json()
+
 
         total_tweets = requests.get("http://127.0.0.1:5000/totalTweets").json()
 
@@ -82,7 +86,8 @@ def index():
         return render_template('index.html',t_data=t_data, s_data=s_data,metrics_day_k=metrics_day_k,
                                                                        metrics_day_v=metrics_day_v,
                                metrics_month_k=metrics_month_k,metrics_month_v=metrics_month_v,
-                               user_metrics=user_metrics,total_tweets=total_tweets,user__monthly_metrics=user__monthly_metrics)
+                               user_metrics=user_metrics,total_tweets=total_tweets,
+                               user__monthly_metrics=user__monthly_metrics,g_data=g_data)
     except Exception as m:
         print(m)
         return render_template('errors/500.html')

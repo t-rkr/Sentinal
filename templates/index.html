@@ -167,7 +167,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table tablesorter " id="">
+                        <table class="table tablemsorter " id="">
                             <thead class=" text-primary">
                             <tr>
                                 <th>
@@ -406,6 +406,10 @@
         gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
         gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
         gradientStroke.addColorStop(0, 'rgba(29,140,248,0)'); //blue colors
+
+        var g_lables = Object.keys({{ g_data | safe }});
+        var g_data = Object.values({{ g_data | safe }});
+
         var myChart = new Chart(ctx, {
             type: 'bar',
             responsive: true,
@@ -413,8 +417,7 @@
                 display: false
             },
             data: {
-                labels: ["Connectivity", "Internet", "Account", "Products",
-                    "CustomerSupport"],
+                labels: g_lables,
                 datasets: [{
                     label: "Greviences",
                     fill: true,
@@ -424,7 +427,7 @@
                     borderWidth: 2,
                     borderDash: [],
                     borderDashOffset: 0.0,
-                    data: [53, 20, 10, 80, 45],
+                    data: g_data,
                 }]
             },
             options: gradientBarChartConfiguration
@@ -442,8 +445,8 @@
         gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
         gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
-        var label_m = Object.keys({{ user__monthly_metrics|safe }})
-        var data_m = Object.values({{ user__monthly_metrics|safe }})
+        var label_m = Object.keys({{ user__monthly_metrics|safe }});
+        var data_m = Object.values({{ user__monthly_metrics|safe }});
         var data = {
             labels: label_m,
             datasets: [{
