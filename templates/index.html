@@ -97,13 +97,6 @@
                       <i class="tim-icons icon-gift-2"></i>
                     </span>
                                 </label>
-                                {#                                <label class="btn btn-sm btn-primary btn-simple" id="2">#}
-                                {#                                    <input type="radio" class="d-none" name="options">#}
-                                {#                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Year</span>#}
-                                {#                                    <span class="d-block d-sm-none">#}
-                                {#                      <i class="tim-icons icon-tap-02"></i>#}
-                                {#                    </span>#}
-                                {#                                </label>#}
                             </div>
                         </div>
                     </div>
@@ -153,7 +146,8 @@
                 </div>
                 <div class="card-body">
                     <div class="chart-area">
-                        <canvas id="chartLineGreen"></canvas>
+                        <canvas id="chartLineGreen" style="display: block;width: 204px;height: 90px !important;
+"></canvas>
                     </div>
                 </div>
             </div>
@@ -167,7 +161,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table tablemsorter " id="">
+                        <table class="table tablesorter " id="">
                             <thead class=" text-primary">
                             <tr>
                                 <th>
@@ -264,10 +258,9 @@
 
         //Timeline chart
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        var chart_labels =
-        {{ metrics_day_k|safe }}
-        var chart_data = {{ metrics_day_v|safe }}
-            gradientChartOptionsConfigurationWithTooltipPurple = {
+        var chart_labels = Object.keys({{ metrics_d|safe }})
+        var chart_data = Object.values({{ metrics_d|safe }})
+        gradientChartOptionsConfigurationWithTooltipPurple = {
                 maintainAspectRatio: false,
                 legend: {
                     display: false
@@ -351,19 +344,12 @@
             myChartData.update();
         });
         $("#1").click(function () {
-            var chart_data = {{ metrics_month_v|safe }};
+            var chart_data = Object.keys({{ metrics_m|safe }});
             var data = myChartData.config.data;
             data.datasets[0].data = chart_data;
-            data.labels = {{ metrics_month_k|safe }}
+            data.labels = Object.values({{ metrics_m|safe }})
                 myChartData.update();
         });
-        {#$("#2").click(function () {#}
-        {#    var chart_data = [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130];#}
-        {#    var data = myChartData.config.data;#}
-        {#    data.datasets[0].data = chart_data;#}
-        {#    data.labels = chart_labels;#}
-        {#    myChartData.update();#}
-        {# });#}
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         //Sentiment Distribution Chart
@@ -380,7 +366,7 @@
             data: {
                 datasets: [{
                     data: data_x,
-                    backgroundColor: ["#3e95cd", "#8e5ea2"]
+                    backgroundColor: ["#ff8d72", "#1d8cf8"]
                 }],
                 // These labels appear in the legend and in the tooltips when hovering different arcs
                 labels: [
