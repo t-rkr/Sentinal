@@ -8,10 +8,10 @@
 
 .chat-container {
   /*margin: 0px;*/
-  padding: 0px;
-  width: 500px;
-  /*margin: 35px 0px;*/
-  margin-left: 15%;
+  padding: 10px;
+  width: 800px;
+  /* margin: 35px 0px; */
+  margin-left: 10%;
   margin-right: 15%;
 }
 
@@ -37,10 +37,15 @@
 #chat_input {
     width: 500px;
     /*margin: 35px 0px; */
-    background-color: rgba(155,160,171,0.42);
+    background-color: rgba(0, 117, 171, 0.11);
     border-radius: 3px;
     margin-left: 15%;
     margin-right: 15%;
+}
+
+input{
+    color: white !important;
+    border: hidden;
 }
 </style>
 {% endblock stylesheets %}
@@ -54,14 +59,16 @@
                 <div class="chat-container" style="overflow: auto; max-height: 80vh">
                     <!-- chat messages -->
                     <div class="chat-message col-md-5 offset-md-7 bot-message">
-                        Hi I'm Sentinal! How can I help you?
+                        Hi there, Choose the company for which you want to obtain information: Singtel, Starhub or M1.
                     </div>
                 </div>
-                <form id="chat_target">
+                <div style="margin-left:15% ">
+                    <form id="chat_target">
                     <input id="chat_input" class="input" type="text" value="" placeholder="Enter message..."
                            />
                     <input type="submit" hidden>
                 </form>
+                </div>
             </div>
         </div>
     </div>
