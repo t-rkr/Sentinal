@@ -14,6 +14,7 @@ def chat():
     message = request.form['message']
     querystring = {"message": message}
     reply = requests.request("POST",app.config["CHAT"],params=querystring).json()
+
     return reply
 
 
